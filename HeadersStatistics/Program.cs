@@ -6,10 +6,19 @@ using System.Threading.Tasks;
 
 namespace HeadersStatistics
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
+            HeaderCharactersCalculator calculator = new HeaderCharactersCalculator();
+
+            var timer = new System.Threading.Timer(
+                e => calculator.Run(),
+                null,
+                TimeSpan.Zero,
+                TimeSpan.FromMinutes(10));
+
+            Console.ReadKey();
         }
     }
 }
