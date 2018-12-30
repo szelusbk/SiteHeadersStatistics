@@ -8,15 +8,18 @@ namespace HeadersStatistics.Test
     [TestFixture]
     public class CharacterStatisticsTests
     {
-        [Test]
-        public void GetCollectionOfCharacterStatistics_PassListOfStrings_GetCorrectCharacterStatistics()
+        private List<string> GetListOfHeaders()
         {
-            CharacterStatistics characterStatistics = new CharacterStatistics();
             List<string> headers = new List<string>()
             {
                 "ala ma kota",
                 "kot ma mysz"
             };
+            return headers;
+        }
+
+        private IEnumerable<KeyValuePair<char, int>> GetExpectedStatistics()
+        {
             IEnumerable<KeyValuePair<char, int>> expectedStatistics = new List<KeyValuePair<char, int>>
             {
                 new KeyValuePair<char, int>('a', 5),
@@ -30,9 +33,21 @@ namespace HeadersStatistics.Test
                 new KeyValuePair<char, int>('z', 1),
 
             };
+            return expectedStatistics;
+        }
 
+        [Test]
+        public void GetCollectionOfCharacterStatistics_PassListOfStrings_GetCorrectCharacterStatistics()
+        {
+            //Arrange
+            CharacterStatistics characterStatistics = new CharacterStatistics();
+            List<string> headers = GetListOfHeaders();
+            IEnumerable<KeyValuePair<char, int>> expectedStatistics = GetExpectedStatistics();
+
+            //Act
             IEnumerable<KeyValuePair<char, int>> results = characterStatistics.GetCollectionOfCharacterStatistics(headers);
 
+            //Assert
             Assert.AreEqual(expectedStatistics, results);
         }
     }
